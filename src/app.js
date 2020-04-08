@@ -1,33 +1,26 @@
 const express = require("express");
 const cors = require("cors");
 
-// const { uuid } = require("uuidv4");
+const {
+  getAll,
+  create,
+  updateById,
+  deleteById,
+  updateRepositoryLikesById,
+} = require("./repositories");
+const checkUuidIsValid = require("./helpers");
 
 const app = express();
 
 app.use(express.json());
 app.use(cors());
+app.use("/repositories/:id", checkUuidIsValid);
 
-const repositories = [];
-
-app.get("/repositories", (request, response) => {
-  // TODO
-});
-
-app.post("/repositories", (request, response) => {
-  // TODO
-});
-
-app.put("/repositories/:id", (request, response) => {
-  // TODO
-});
-
-app.delete("/repositories/:id", (req, res) => {
-  // TODO
-});
-
-app.post("/repositories/:id/like", (request, response) => {
-  // TODO
-});
+app
+  .get("/repositories", getAll)
+  .post("/repositories", create)
+  .put("/repositories/:id", updateById)
+  .delete("/repositories/:id", deleteById)
+  .post("/repositories/:id/like", updateRepositoryLikesById);
 
 module.exports = app;
